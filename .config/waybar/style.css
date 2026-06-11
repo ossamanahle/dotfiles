@@ -1,0 +1,66 @@
+* {
+    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", monospace;
+    font-size: 13px;
+    min-height: 0;
+}
+
+/* Gruvbox dark palette (matches mako) */
+window#waybar {
+    background: rgba(40, 40, 40, 0.85); /* #282828 */
+    color: #ebdbb2;                     /* fg */
+}
+
+/* ---- Workspaces (top left) ---- */
+#workspaces {
+    margin-left: 6px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: #928374;        /* gray */
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+#workspaces button.active {
+    color: #7a836d;        /* lighter sage (from wallpaper) */
+    font-weight: bold;
+}
+
+#workspaces button:hover {
+    color: #ebdbb2;        /* fg */
+    background: transparent;
+}
+
+/* ---- Right side modules ---- */
+#bluetooth,
+#pulseaudio,
+#network,
+#battery,
+#clock,
+#tray {
+    padding: 0 10px;
+    color: #ebdbb2;        /* fg */
+}
+
+#bluetooth.connected {
+    color: #83a598;        /* blue */
+}
+
+#clock {
+    margin-right: 6px;
+    font-weight: bold;
+}
+
+#battery.warning {
+    color: #fabd2f;        /* yellow */
+}
+
+#battery.critical {
+    color: #fb4934;        /* red */
+}
+
+#battery.charging {
+    color: #b8bb26;        /* green */
+}
