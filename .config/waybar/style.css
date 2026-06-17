@@ -24,7 +24,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: #7a836d;        /* lighter sage (from wallpaper) */
+    color: #7a836d;        /* lighter sage */
     font-weight: bold;
 }
 

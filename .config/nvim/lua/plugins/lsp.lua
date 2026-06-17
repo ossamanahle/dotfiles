@@ -1,6 +1,6 @@
 -- ~/.config/nvim/lua/plugins/lsp.lua
 -- Mason (installs LSP servers) + mason-lspconfig + nvim-lspconfig.
--- Requires Neovim >= 0.11 (you have 0.12). Installed servers are auto-enabled
+-- Requires Neovim >= 0.11. Installed servers are auto-enabled
 -- via the native vim.lsp API — no manual per-server boilerplate needed.
 return {
   "mason-org/mason-lspconfig.nvim",
@@ -13,10 +13,10 @@ return {
     -- Names are lspconfig names (not Mason package names). Browse more with :Mason
     ensure_installed = {
       "lua_ls",   -- Lua
-      "pyright",  -- Python            (needs node — you have it)
+      "pyright",  -- Python            (needs Node)
       "clangd",   -- C and C++         (one server covers both)
       "ts_ls",    -- JavaScript & TypeScript (one server covers both; needs node)
-      "jdtls",    -- Java              (needs a JDK installed system-wide — see note)
+      "jdtls",    -- Java              (needs a JDK installed system-wide)
     },
   },
   config = function(_, opts)
