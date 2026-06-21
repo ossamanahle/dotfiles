@@ -163,9 +163,9 @@ hl.curve("linear",       { type = "bezier", points = { {0, 0},        {1, 1}    
 -- speed = duration in 1/10 s (higher = slower). Tuned for a fluid, gliding feel.
 hl.animation({ leaf = "global",        enabled = true,  speed = 7,    bezier = "smooth" })
 hl.animation({ leaf = "border",        enabled = true,  speed = 8,    bezier = "smooth" })
-hl.animation({ leaf = "windows",       enabled = true,  speed = 3.5,  bezier = "glide",        style = "popin 55%" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 3,    bezier = "glide",        style = "popin 55%" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 3,    bezier = "glide",        style = "popin 55%" })
+hl.animation({ leaf = "windows",       enabled = true,  speed = 2.5,  bezier = "glide",        style = "popin 0%" })
+hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 2.5,  bezier = "glide",        style = "popin 0%" })
+hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 2.5,  bezier = "glide",        style = "popin 0%" })
 hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 5,    bezier = "almostLinear" })
 hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 5,    bezier = "almostLinear" })
 hl.animation({ leaf = "fade",          enabled = true,  speed = 5,    bezier = "almostLinear" })
@@ -174,9 +174,9 @@ hl.animation({ leaf = "layersIn",      enabled = true,  speed = 5,    bezier = "
 hl.animation({ leaf = "layersOut",     enabled = true,  speed = 5,    bezier = "glide",        style = "slide" })
 hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 5,    bezier = "almostLinear" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 5,    bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces",    enabled = true,  speed = 6,    bezier = "smooth",       style = "slide" })
-hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 6,    bezier = "smooth",       style = "slide" })
-hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 6,    bezier = "smooth",       style = "slide" })
+hl.animation({ leaf = "workspaces",    enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
+hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
+hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
 hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "smooth" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
