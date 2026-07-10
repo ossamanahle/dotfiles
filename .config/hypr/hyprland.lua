@@ -36,7 +36,7 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "kitty"
 local fileManager = "dolphin"
-local menu        = "hyprlauncher"
+local menu        = "fuzzel"
 
 
 -------------------
@@ -169,11 +169,13 @@ hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 2.5,  bezier = "
 hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 5,    bezier = "almostLinear" })
 hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 5,    bezier = "almostLinear" })
 hl.animation({ leaf = "fade",          enabled = true,  speed = 5,    bezier = "almostLinear" })
-hl.animation({ leaf = "layers",        enabled = true,  speed = 5,    bezier = "glide" })
-hl.animation({ leaf = "layersIn",      enabled = true,  speed = 5,    bezier = "glide",        style = "slide" })
-hl.animation({ leaf = "layersOut",     enabled = true,  speed = 5,    bezier = "glide",        style = "slide" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 5,    bezier = "almostLinear" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 5,    bezier = "almostLinear" })
+-- Snappy launcher/layer pop-in: short durations + a light scale (popin) that
+-- reads faster than a slide. (speed = duration in 1/10 s; lower = faster.)
+hl.animation({ leaf = "layers",        enabled = true,  speed = 3,    bezier = "glide" })
+hl.animation({ leaf = "layersIn",      enabled = true,  speed = 2,    bezier = "glide",        style = "popin 90%" })
+hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "glide",        style = "popin 90%" })
+hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 2,    bezier = "almostLinear" })
+hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.5,  bezier = "almostLinear" })
 hl.animation({ leaf = "workspaces",    enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
 hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
 hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
@@ -210,12 +212,17 @@ hl.config({
         new_status = "master",
     },
 })
-
 -- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
 hl.config({
     scrolling = {
         fullscreen_on_one_column = true,
     },
+})
+
+hl.config({
+  cursor = {
+    no_hardware_cursors = false,
+  },
 })
 
 ----------------
@@ -278,7 +285,16 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+-- Toggle floating; when the window BECOMES floating, size it to 960x600 (≈60%
+-- of the 1600x1000 usable area) and center it. Toggling back to tiled is left
+-- untouched. NOTE: this build (Hyprland 0.55, Lua config) routes `hyprctl
+-- dispatch` through the Lua engine, so we pass hl.dsp.* expressions, not the
+-- classic string dispatchers (togglefloating/resizeactive/centerwindow).
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(
+    [[hyprctl dispatch 'hl.dsp.window.float({ action = "toggle" })'; ]] ..
+    [[hyprctl activewindow | grep -q 'floating: 1' && { ]] ..
+    [[hyprctl dispatch 'hl.dsp.window.resize({ exact = true, x = 960, y = 600 })'; ]] ..
+    [[hyprctl dispatch 'hl.dsp.window.center()'; }]]))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + t", hl.dsp.layout("togglesplit"))    -- dwindle only
@@ -288,6 +304,12 @@ hl.bind(mainMod .. " + h",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + k",    hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + j",  hl.dsp.focus({ direction = "down" }))
+
+-- Move / swap the active window within the tree with mainMod + SHIFT + hjkl
+hl.bind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "left" }))
+hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "right" }))
+hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "up" }))
+hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "down" }))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
@@ -324,7 +346,8 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
 -- Lock the screen (also triggered automatically by hypridle / on suspend)
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
+-- Moved off SUPER+SHIFT+L to avoid clashing with the move-window-right bind.
+hl.bind(mainMod .. " + CTRL + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 
 -- Screenshots (grim + slurp). Saved to ~/Pictures/Screenshots and copied to clipboard.
 -- SUPER + SHIFT + S -> select a region, save to file + copy to clipboard
@@ -335,8 +358,8 @@ hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd("mkdir -p ~/Pictures/Screensh
 -- Color picker (hyprpicker): copies hex to clipboard
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("hyprpicker -a"))
 
--- Clipboard history picker (cliphist via hyprlauncher's dmenu mode)
-hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("cliphist list | hyprlauncher --dmenu | cliphist decode | wl-copy"))
+-- Clipboard history picker (cliphist via fuzzel's dmenu mode)
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"))
 
 -- Audio mixer GUI
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("pavucontrol"))
@@ -383,6 +406,14 @@ hl.window_rule({
 -- })
 -- overlayLayerRule:set_enabled(false)
 
+-- Fuzzel launcher: dim + blur the background for a focused, modern popup.
+hl.layer_rule({
+    name       = "fuzzel-dim-blur",
+    match      = { namespace = "^fuzzel$" },
+    dim_around = true,
+    blur       = true,
+})
+
 -- Hyprland-run windowrule
 hl.window_rule({
     name  = "move-hyprland-run",
@@ -390,4 +421,15 @@ hl.window_rule({
 
     move  = "20 monitor_h-120",
     float = true,
+})
+
+-- Kdenlive file dialogs (Add Clip, etc.) open far too small on Hyprland,
+-- crushing the file-list pane to nothing. Force a usable, centered size.
+hl.window_rule({
+    name   = "kdenlive-file-dialog",
+    match  = { class = "^org.kde.kdenlive$", title = "^Kdenlive$", float = true },
+
+    float  = true,
+    size   = "1200 800",
+    center = true,
 })

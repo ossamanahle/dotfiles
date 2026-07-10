@@ -16,3 +16,4 @@ eval "$(starship init bash)"
 
 # serverless
 alias sls='npx serverless'
+alias vim='nvim'

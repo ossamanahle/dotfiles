@@ -34,7 +34,7 @@ window#waybar {
 }
 
 /* ---- Right side modules ---- */
-#bluetooth,
+#memory,
 #pulseaudio,
 #network,
 #battery,
@@ -42,10 +42,6 @@ window#waybar {
 #tray {
     padding: 0 10px;
     color: #ebdbb2;        /* fg */
-}
-
-#bluetooth.connected {
-    color: #83a598;        /* blue */
 }
 
 #clock {
