@@ -36,6 +36,20 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")                          -- 
 vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { desc = "Save file" })
 vim.keymap.set("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit window" })
 
+-- === Terminal ===
+vim.keymap.set("n", "<leader>tt", "<cmd>botright split | resize 12 | terminal<CR>i",
+  { desc = "Open terminal (horizontal split)" })
+vim.keymap.set("n", "<leader>tv", "<cmd>vsplit | terminal<CR>i",
+  { desc = "Open terminal (vertical split)" })
+vim.keymap.set("t", "<C-\\>", "<C-\\><C-n>", { desc = "Exit terminal mode" }) -- back to normal mode
+
+-- === Buffers ===
+vim.keymap.set("n", "<leader>]", "<cmd>bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<leader>[", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<leader>bb", "<C-^>", { desc = "Toggle last buffer" })
+vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Delete (close) buffer" })
+vim.keymap.set("n", "<leader>bl", "<cmd>buffers<CR>", { desc = "List buffers" })
+
 -- === Bootstrap lazy.nvim (installs itself on first launch) ===
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then

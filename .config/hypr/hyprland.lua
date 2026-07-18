@@ -51,7 +51,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("hyprlock")
 
     hl.exec_cmd("waybar")
-    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("swaybg -i /home/ossama/Pictures/Wallpapers/leaves-2560.png -m fill")
 
     -- Idle daemon (screen dim / lock / dpms / suspend)
     hl.exec_cmd("hypridle")
@@ -233,6 +233,24 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+    },
+})
+
+
+-------------------
+---- XWAYLAND ----
+-------------------
+
+-- See https://wiki.hypr.land/Configuring/Variables/#xwayland
+-- Without this, XWayland apps are handed a 1600x1000 screen (2560x1600 / 1.6)
+-- and Hyprland upscales their output by the monitor scale -> blurry. DaVinci
+-- Resolve is XWayland-only, so it takes the full brunt of that.
+-- Zero scaling hands XWayland the real 2560x1600 and renders it 1:1 instead.
+-- Apps that don't scale themselves then draw small; Resolve has its own
+-- Preferences > User > UI Settings > UI Display Scale to compensate.
+hl.config({
+    xwayland = {
+        force_zero_scaling = true,
     },
 })
 
