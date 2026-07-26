@@ -23,7 +23,9 @@ vim.opt.hlsearch = true        -- highlight matches
 vim.opt.incsearch = true       -- show matches as you type
 
 -- === Editing quality of life ===
-vim.opt.wrap = false           -- don't soft-wrap long lines
+vim.opt.wrap = true            -- soft-wrap long lines
+vim.opt.linebreak = true       -- wrap at word boundaries, not mid-word
+vim.opt.breakindent = true     -- wrapped lines keep the original indent
 vim.opt.scrolloff = 8          -- keep 8 lines visible above/below the cursor
 vim.opt.signcolumn = "yes"     -- reserve the gutter so text doesn't jump
 vim.opt.mouse = "a"            -- enable the mouse in all modes
