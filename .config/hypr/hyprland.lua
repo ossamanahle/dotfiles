@@ -28,6 +28,17 @@ hl.monitor({
     scale    = "1.6",
 })
 
+-- 100Hz, not 60Hz: 1920x1080@60 is a CTA-861 TV mode, which makes NVIDIA drive
+-- the link as limited-range RGB (16-235). The Samsung then expands it, crushing
+-- everything above 235 to flat white (faint UI borders disappear). 100Hz is a
+-- PC-only timing, so the link negotiates full range. Bonus: 100Hz.
+hl.monitor({
+    output   = "HDMI-A-2",
+    mode     = "1920x1080@100",
+    position = "2560x0",
+    scale    = "1",
+})
+
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -51,7 +62,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("hyprlock")
 
     hl.exec_cmd("waybar")
-    hl.exec_cmd("swaybg -i /home/ossama/Pictures/Wallpapers/leaves-2560.png -m fill")
+    hl.exec_cmd('swaybg -i "$(cat ~/.cache/wallpaper 2>/dev/null || echo /home/ossama/Pictures/Wallpapers/leaves-2560.png)" -m fill')
 
     -- Idle daemon (screen dim / lock / dpms / suspend)
     hl.exec_cmd("hypridle")
@@ -142,8 +153,8 @@ hl.config({
 
         blur = {
             enabled   = true,
-            size      = 3,
-            passes    = 1,
+            size      = 4,
+            passes    = 3,
             vibrancy  = 0.1696,
         },
     },
@@ -221,7 +232,12 @@ hl.config({
 
 hl.config({
   cursor = {
-    no_hardware_cursors = false,
+    -- Must stay true on this machine: hardware cursors force aquamarine to blit
+    -- the cursor buffer between the Intel iGPU and the NVIDIA dGPU driving
+    -- HDMI-A-2. That blit fails (glCheckFramebufferStatus 1282) and leaks the
+    -- EGLImage it just created -- ~17 KB per cursor update, ~20 MB/min of
+    -- active mouse use. Cost 5 GB of RAM over a 21h session on Hyprland 0.56.0.
+    no_hardware_cursors = true,
   },
 })
 
@@ -430,6 +446,16 @@ hl.layer_rule({
     match      = { namespace = "^fuzzel$" },
     dim_around = true,
     blur       = true,
+})
+
+-- Waybar: layer-shell surfaces (bars, launchers) are NOT covered by
+-- decoration.blur.enabled the way normal windows are -- each one needs its
+-- own layer_rule opt-in, or its translucent background just stays flat.
+-- Only fuzzel had one; waybar's rgba(40,40,40,0.85) bar was falling through.
+hl.layer_rule({
+    name  = "waybar-blur",
+    match = { namespace = "^waybar$" },
+    blur  = true,
 })
 
 -- Hyprland-run windowrule

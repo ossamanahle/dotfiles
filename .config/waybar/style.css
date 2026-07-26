@@ -34,6 +34,8 @@ window#waybar {
 }
 
 /* ---- Right side modules ---- */
+#cpu,
+#custom-gpu,
 #memory,
 #pulseaudio,
 #network,
@@ -59,4 +61,16 @@ window#waybar {
 
 #battery.charging {
     color: #b8bb26;        /* green */
+}
+
+#custom-gpu.warning {
+    color: #fabd2f;        /* yellow */
+}
+
+#custom-gpu.critical {
+    color: #fb4934;        /* red */
+}
+
+#custom-gpu.asleep {
+    color: #928374;        /* gray */
 }

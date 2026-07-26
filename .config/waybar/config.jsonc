@@ -6,7 +6,7 @@
 
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["memory", "pulseaudio", "network", "battery", "tray"],
+    "modules-right": ["cpu", "custom/gpu", "memory", "pulseaudio", "network", "battery", "tray"],
 
     // ----- Left -----
     "hyprland/workspaces": {
@@ -16,9 +16,22 @@
     },
 
     // ----- Right -----
+    "cpu": {
+        "interval": 1,
+        "format": "{usage}% ",
+        "tooltip-format": "CPU: {usage}% over {load} load avg"
+    },
+
+    "custom/gpu": {
+        "exec": "$HOME/.config/waybar/scripts/gpu.sh",
+        "return-type": "json",
+        "interval": 1,
+        "on-click": "nvtop"
+    },
+
     "memory": {
-        "interval": 5,
-        "format": "{used:0.1f} GiB ",
+        "interval": 1,
+        "format": "{used:0.1f} GiB ",
         "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB ({percentage}%)"
     },
 

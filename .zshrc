@@ -29,6 +29,13 @@ bindkey '^[[B' history-search-forward    # ↓
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
+bindkey '^[[1;5C' forward-word           # Ctrl+Right
+bindkey '^[[1;5D' backward-word          # Ctrl+Left
+
+# Ctrl+Backspace (kitty.conf sends ESC+DEL) is already bound to
+# backward-kill-word, but WORDCHARS includes '/' by default, so it deletes
+# a whole path in one go. Drop '/' so it stops at one path segment/word.
+WORDCHARS=${WORDCHARS//[\/]}
 
 # ── Environment ──────────────────────────────────────────
 export PATH="$HOME/.local/bin:$PATH"
@@ -43,7 +50,7 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 
 # ── Functions ────────────────────────────────────────────
 # Switch wallpaper (swaybg): setwall <image-path>
-setwall() { pkill swaybg; swaybg -i "$1" -m fill >/dev/null 2>&1 & disown; }
+setwall() { pkill swaybg; swaybg -i "$1" -m fill >/dev/null 2>&1 & disown; echo "$1" > ~/.cache/wallpaper; }
 
 # ── Plugins ──────────────────────────────────────────────
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
