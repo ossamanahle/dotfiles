@@ -38,8 +38,11 @@ bindkey '^[[1;5D' backward-word          # Ctrl+Left
 WORDCHARS=${WORDCHARS//[\/]}
 
 # ── Environment ──────────────────────────────────────────
-export PATH="$HOME/.local/bin:$PATH"
 export MANPAGER='nvim +Man!'
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+
+export PATH="$HOME/.local/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH"
 
 # ── Aliases (carried from .bashrc) ───────────────────────
 alias ls='ls --color=auto'
