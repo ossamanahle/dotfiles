@@ -50,6 +50,7 @@ alias grep='grep --color=auto'
 alias vim='nvim'
 alias sls='npx serverless'
 alias dotfiles='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
+alias cat='bat'
 
 # ── Functions ────────────────────────────────────────────
 # Switch wallpaper (swaybg): setwall <image-path>
