@@ -160,8 +160,8 @@ hl.config({
     },
 
     animations = {
-        enabled = true,
-    },
+          enabled = false,
+      },
 })
 
 -- Curves, see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/
@@ -172,25 +172,25 @@ hl.curve("almostLinear", { type = "bezier", points = { {0.5, 0.5},    {0.75, 1} 
 hl.curve("linear",       { type = "bezier", points = { {0, 0},        {1, 1}     } })
 
 -- speed = duration in 1/10 s (higher = slower). Tuned for a fluid, gliding feel.
-hl.animation({ leaf = "global",        enabled = true,  speed = 7,    bezier = "smooth" })
-hl.animation({ leaf = "border",        enabled = true,  speed = 8,    bezier = "smooth" })
-hl.animation({ leaf = "windows",       enabled = true,  speed = 2.5,  bezier = "glide",        style = "popin 0%" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 2.5,  bezier = "glide",        style = "popin 0%" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 2.5,  bezier = "glide",        style = "popin 0%" })
-hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 5,    bezier = "almostLinear" })
-hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 5,    bezier = "almostLinear" })
-hl.animation({ leaf = "fade",          enabled = true,  speed = 5,    bezier = "almostLinear" })
+--hl.animation({ leaf = "global",        enabled = true,  speed = 7,    bezier = "smooth" })
+--hl.animation({ leaf = "border",        enabled = true,  speed = 8,    bezier = "smooth" })
+--hl.animation({ leaf = "windows",       enabled = true,  speed = 2.5,  bezier = "glide",        style = "popin 0%" })
+--hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 2.5,  bezier = "glide",        style = "popin 0%" })
+--hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 2.5,  bezier = "glide",        style = "popin 0%" })
+--hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 5,    bezier = "almostLinear" })
+--hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 5,    bezier = "almostLinear" })
+--hl.animation({ leaf = "fade",          enabled = true,  speed = 5,    bezier = "almostLinear" })
 -- Snappy launcher/layer pop-in: short durations + a light scale (popin) that
 -- reads faster than a slide. (speed = duration in 1/10 s; lower = faster.)
-hl.animation({ leaf = "layers",        enabled = true,  speed = 3,    bezier = "glide" })
-hl.animation({ leaf = "layersIn",      enabled = true,  speed = 2,    bezier = "glide",        style = "popin 90%" })
-hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "glide",        style = "popin 90%" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 2,    bezier = "almostLinear" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.5,  bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces",    enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
-hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
-hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
-hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "smooth" })
+--hl.animation({ leaf = "layers",        enabled = true,  speed = 3,    bezier = "glide" })
+--hl.animation({ leaf = "layersIn",      enabled = true,  speed = 2,    bezier = "glide",        style = "popin 90%" })
+--hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "glide",        style = "popin 90%" })
+--hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 2,    bezier = "almostLinear" })
+--hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.5,  bezier = "almostLinear" })
+--hl.animation({ leaf = "workspaces",    enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
+--hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
+--hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 4,    bezier = "smooth",       style = "slide" })
+--hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "smooth" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
