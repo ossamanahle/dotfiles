@@ -6,7 +6,7 @@ return {
   event = "VeryLazy",
   opts = {
     options = {
-      theme = "gruvbox",
+      theme = "gruvbox-material",
       globalstatus = true,        -- a single statusline for the whole editor (cleaner)
       icons_enabled = true,
       -- Minimal look: no powerline arrows, thin separators between components.
