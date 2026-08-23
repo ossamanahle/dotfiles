@@ -54,11 +54,6 @@ unset _m
 # A few emacs keys kept in INSERT mode — vi mode drops these by default and
 # they have no comfortable vim equivalent mid-typing.
 bindkey -M viins '^?' backward-delete-char   # backspace past the insert point
-# Ctrl+Backspace deletes the previous word. foot sends ^H (0x08) for it;
-# ESC+DEL is bound too so this survives a terminal swap (kitty sent that).
-# Emacs mode bound these by default, vi mode does not.
-bindkey -M viins '^H' backward-kill-word
-bindkey -M viins '^[^?' backward-kill-word
 bindkey -M viins '^A' beginning-of-line
 bindkey -M viins '^E' end-of-line
 bindkey -M viins '^W' backward-kill-word
@@ -87,9 +82,9 @@ _vi_cursor_default() { printf '\e[0 q' }  # hand control back to foot.ini
 add-zsh-hook precmd _vi_cursor_insert     # every new prompt starts in insert
 add-zsh-hook preexec _vi_cursor_default   # let programs pick their own cursor
 
-# WORDCHARS includes '/' by default, so backward-kill-word (Ctrl+Backspace,
-# Ctrl+W) would eat a whole path in one go. Drop '/' so it stops at one path
-# segment. Only affects the ZLE word widgets, not vim's own w/b motions.
+# WORDCHARS includes '/' by default, so backward-kill-word (Ctrl+W) would eat
+# a whole path in one go. Drop '/' so it stops at one path segment. Only
+# affects the ZLE word widgets, not vim's own w/b motions.
 WORDCHARS=${WORDCHARS//[\/]}
 
 # ── Environment ──────────────────────────────────────────
@@ -106,6 +101,7 @@ alias vim='nvim'
 alias sls='npx serverless'
 alias dotfiles='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 alias cat='bat'
+alias op='opencode'
 
 # ── Functions ────────────────────────────────────────────
 # Switch wallpaper (swaybg): setwall <image-path>

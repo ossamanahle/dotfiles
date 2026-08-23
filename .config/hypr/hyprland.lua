@@ -45,7 +45,7 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal    = "foot"
+local terminal    = "alacritty"
 local fileManager = "dolphin"
 local menu        = "fuzzel"
 
@@ -456,6 +456,13 @@ hl.layer_rule({
     name  = "waybar-blur",
     match = { namespace = "^waybar$" },
     blur  = true,
+})
+
+-- Alacritty opacity (compositor-level so nvim/TUI apps respect it)
+hl.window_rule({
+    name  = "alacritty-opacity",
+    match = { class = "Alacritty" },
+    opacity = 0.85,
 })
 
 -- Hyprland-run windowrule
