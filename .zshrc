@@ -102,6 +102,7 @@ alias sls='npx serverless'
 alias dotfiles='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 alias cat='bat'
 alias op='opencode'
+alias devpod='devpod-cli'
 
 # ── Functions ────────────────────────────────────────────
 # Switch wallpaper (swaybg): setwall <image-path>
