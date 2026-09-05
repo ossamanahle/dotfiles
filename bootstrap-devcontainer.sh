@@ -49,6 +49,27 @@ done
 
 [[ -d "$BACKUP" ]] && echo "==> replaced files kept in $BACKUP"
 
+# zsh plugin paths: .zshrc hardcodes Arch's layout
+#   /usr/share/zsh/plugins/<name>/<name>.zsh
+# Debian installs to
+#   /usr/share/<name>/<name>.zsh
+# The sources are suppressed with 2>/dev/null, so a wrong path fails silently
+# and ZSH_HIGHLIGHT_STYLES is never declared as an associative array -- the
+# next line then errors with "assignment to invalid subscript range".
+#
+# Rewrite the paths in the COPY, in place: these lines run near the top of
+# .zshrc, so appending a fix at the end would be too late.
+if [[ -f "$HOME/.zshrc" ]]; then
+  for n in zsh-autosuggestions zsh-syntax-highlighting; do
+    if [[ -r "/usr/share/$n/$n.zsh" ]]; then
+      sed -i "s#/usr/share/zsh/plugins/$n/$n.zsh#/usr/share/$n/$n.zsh#g" "$HOME/.zshrc"
+      echo "    repath  $n -> /usr/share/$n/"
+    else
+      echo "    missing $n (not installed in this image)"
+    fi
+  done
+fi
+
 # Select the stripped nvim config. NVIM_APPNAME makes nvim read
 # ~/.config/nvim-k8s instead of ~/.config/nvim. Container-only: this line is
 # appended here rather than committed to .zshrc, so the laptop is unaffected.
