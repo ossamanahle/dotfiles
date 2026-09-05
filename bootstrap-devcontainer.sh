@@ -19,7 +19,7 @@ BACKUP="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 # Deliberately excluded: hypr, waybar, mako, kitty, alacritty, foot, gtk —
 # a container has no compositor, no window, no font rendering.
 PATHS=(
-  .config/nvim
+  .config/nvim-k8s
   .config/starship.toml
   .config/bat
   .config/atuin
@@ -49,6 +49,17 @@ done
 
 [[ -d "$BACKUP" ]] && echo "==> replaced files kept in $BACKUP"
 
+# Select the stripped nvim config. NVIM_APPNAME makes nvim read
+# ~/.config/nvim-k8s instead of ~/.config/nvim. Container-only: this line is
+# appended here rather than committed to .zshrc, so the laptop is unaffected.
+if [[ -d "$HOME/.config/nvim-k8s" ]]; then
+  MARK="# devcontainer: stripped nvim config"
+  if ! grep -qF "$MARK" "$HOME/.zshrc" 2>/dev/null; then
+    printf '\n%s\nexport NVIM_APPNAME=nvim-k8s\n' "$MARK" >> "$HOME/.zshrc"
+    echo "==> NVIM_APPNAME=nvim-k8s appended to .zshrc"
+  fi
+fi
+
 # zsh as the login shell, if the image has it. chsh needs no password
 # under sudo NOPASSWD; skip silently when either piece is missing.
 if command -v zsh >/dev/null 2>&1; then
@@ -62,7 +73,7 @@ fi
 # Report what .zshrc expects but the image lacks, instead of failing later
 # at every shell start.
 missing=()
-for c in nvim tmux zsh git atuin starship bat; do
+for c in nvim tmux zsh git atuin starship node npm kubectl helm; do
   command -v "$c" >/dev/null 2>&1 || missing+=("$c")
 done
 if ((${#missing[@]})); then
