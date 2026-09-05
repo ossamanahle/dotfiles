@@ -24,6 +24,7 @@ PATHS=(
   .config/bat
   .config/atuin
   .zshrc
+  .tmux.conf
 )
 
 echo "==> dotfiles source: $SRC"
