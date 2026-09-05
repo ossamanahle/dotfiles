@@ -23,7 +23,6 @@ PATHS=(
   .config/starship.toml
   .config/bat
   .config/atuin
-  .config/yazi
   .zshrc
 )
 
@@ -78,6 +77,18 @@ if [[ -d "$HOME/.config/nvim-k8s" ]]; then
   if ! grep -qF "$MARK" "$HOME/.zshrc" 2>/dev/null; then
     printf '\n%s\nexport NVIM_APPNAME=nvim-k8s\n' "$MARK" >> "$HOME/.zshrc"
     echo "==> NVIM_APPNAME=nvim-k8s appended to .zshrc"
+  fi
+fi
+
+# Debian ships bat's binary as `batcat` (name clash with bacula-console-qt);
+# Arch ships it as `bat`. .zshrc aliases cat='bat', which breaks here.
+# Appending works because the LAST alias definition wins -- unlike the plugin
+# `source` lines above, which had to be fixed in place.
+if ! command -v bat >/dev/null 2>&1 && command -v batcat >/dev/null 2>&1; then
+  MARK_BAT="# devcontainer: bat is batcat on debian"
+  if ! grep -qF "$MARK_BAT" "$HOME/.zshrc" 2>/dev/null; then
+    printf '\n%s\nalias cat=batcat\n' "$MARK_BAT" >> "$HOME/.zshrc"
+    echo "==> alias cat=batcat appended to .zshrc"
   fi
 fi
 
