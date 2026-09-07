@@ -18,26 +18,27 @@ return {
     -- installed ones are skipped, so this is cheap on later launches.
     -- Add one at any time with :TSInstall <name>, remove with :TSUninstall.
     require("nvim-treesitter").install({
-      -- Neovim itself / docs
+      -- Neovim infrastructure. Not "languages" you write in, but things that
+      -- break visibly without a parser: `vimdoc`/`markdown` render :help and
+      -- LSP hover popups, `query` highlights treesitter files themselves.
       "lua", "luadoc", "vim", "vimdoc", "query",
-      "markdown", "markdown_inline", "comment", "regex", "diff",
+      "markdown", "markdown_inline",
 
-      -- the languages your LSP servers cover (see lua/plugins/lsp.lua)
-      "python", "javascript", "jsdoc", "typescript", "tsx",
-      "java", "c", "cpp",
+      -- The languages your LSP servers cover (see lua/plugins/lsp.lua).
+      -- Keep this block in sync with `ensure_installed` there.
+      "python",                 -- pyright
+      "c", "cpp",               -- clangd
+      "javascript", "typescript", "tsx", -- ts_ls
+      "java",                   -- jdtls
 
-      -- other mainstream languages
-      "rust", "go", "gomod", "gosum", "ruby", "php", "c_sharp",
-      "kotlin", "swift", "scala", "haskell", "zig", "elixir",
-      "perl", "r", "julia", "dart", "sql",
+      -- Systems / query languages
+      "rust", "sql",
 
-      -- web / markup / data
-      "html", "css", "scss", "json", "yaml", "toml", "xml",
-      "graphql", "vue", "svelte",
+      -- Web, markup and config formats
+      "html", "css", "json", "yaml", "toml",
 
-      -- shell, build systems, and your dotfiles
-      "bash", "zsh", "ini", "dockerfile", "make", "cmake",
-      "ssh_config", "git_config", "gitcommit", "gitignore", "git_rebase",
+      -- Shells
+      "bash", "zsh",
     })
 
     -- One autocmd for every filetype. vim.treesitter.start() maps the

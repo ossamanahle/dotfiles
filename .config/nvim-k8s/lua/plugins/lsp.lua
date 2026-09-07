@@ -26,6 +26,28 @@ return {
 
     require("mason-lspconfig").setup(opts)
 
+    -- bashls needs shellcheck for diagnostics; it's a Mason *tool*, not an LSP,
+    -- so ensure_installed above can't reach it:  :MasonInstall shellcheck
+
+    -- Treat zsh buffers as shell for bashls, whose default filetype list is
+    -- sh/bash only.
+    vim.lsp.config("bashls", {
+      filetypes = { "sh", "bash", "zsh" },
+    })
+
+    -- The payload of this config. SchemaStore gives real validation and
+    -- completion for k8s manifests, helm values and compose files -- without
+    -- it yamlls only checks that the YAML parses at all.
+    vim.lsp.config("yamlls", {
+      settings = {
+        yaml = {
+          validate = true,
+          keyOrdering = false, -- don't complain about unsorted keys
+          schemaStore = { enable = true, url = "https://www.schemastore.org/api/json/catalog.json" },
+        },
+      },
+    })
+
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(event)
         local map = function(keys, fn, desc)
