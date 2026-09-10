@@ -48,6 +48,10 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")                          -- 
 vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { desc = "Save file" })
 vim.keymap.set("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit window" })
 
+-- Keep the selection after indenting so you can press < / > repeatedly
+vim.keymap.set("v", "<", "<gv", { desc = "Indent left, keep selection" })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent right, keep selection" })
+
 -- === Terminal ===
 vim.keymap.set("n", "<leader>tt", "<cmd>botright split | resize 12 | terminal<CR>i",
   { desc = "Open terminal (horizontal split)" })
