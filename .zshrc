@@ -91,6 +91,7 @@ WORDCHARS=${WORDCHARS//[\/]}
 export MANPAGER='nvim +Man!'
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
+export GPG_TTY=$(tty)
 
 export PATH="$HOME/.local/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH"
 
@@ -102,7 +103,6 @@ alias sls='npx serverless'
 alias dotfiles='git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
 alias cat='bat'
 alias op='opencode'
-alias devpod='devpod-cli'
 
 # ── Functions ────────────────────────────────────────────
 # Switch wallpaper (swaybg): setwall <image-path>
@@ -113,8 +113,9 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev
 
 # Syntax highlighting — MUST be sourced last.
 # Colors the command line live: valid commands = green, bad = red.
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+#source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 # green when the command exists / is valid:
+typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[command]='fg=green'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=green'
 ZSH_HIGHLIGHT_STYLES[function]='fg=green'

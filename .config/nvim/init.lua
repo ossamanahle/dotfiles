@@ -33,6 +33,15 @@ vim.opt.clipboard = "unnamedplus" -- use the system clipboard (needs wl-clipboar
 vim.opt.undofile = true        -- persist undo history across sessions
 vim.opt.termguicolors = true   -- enable 24-bit colors (required by gruvbox)
 
+-- === Diff quality (matters for :Gdiffsplit and merge conflicts) ===
+-- nvim already defaults to linematch:40, so remove it before setting our own
+-- value -- appending blindly would leave both entries in the list.
+vim.opt.diffopt:remove("linematch:40")
+vim.opt.diffopt:append("linematch:60")        -- align changed lines *within* a hunk
+vim.opt.diffopt:append("algorithm:histogram") -- smarter diffs, fewer spurious changes
+vim.opt.diffopt:append("vertical")            -- default diffs to a side-by-side split
+vim.opt.fillchars:append("diff:╱")           -- diagonal fill for missing lines
+
 -- === A few handy mappings ===
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")                          -- clear search highlight
 vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { desc = "Save file" })

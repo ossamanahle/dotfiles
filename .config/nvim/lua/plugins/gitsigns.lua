@@ -35,6 +35,16 @@ return {
       auto_attach = true,
       attach_to_untracked = true, -- required for the `untracked` sign above to ever render
 
+      -- Dotfiles live in a BARE repo (~/.dotfiles.git) with $HOME as the work
+      -- tree, so files like ~/.zshrc have no `.git` next to them and gitsigns
+      -- would never attach. Declaring the worktree here fixes that.
+      worktrees = {
+        {
+          toplevel = vim.env.HOME,
+          gitdir = vim.env.HOME .. "/.dotfiles.git",
+        },
+      },
+
       current_line_blame = false,
 
       current_line_blame_opts = {

@@ -6,7 +6,7 @@
 
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["cpu", "custom/gpu", "memory", "pulseaudio", "network", "battery", "tray"],
+    "modules-right": ["cpu", "custom/gpu", "memory", "pulseaudio", "network", "battery"],
 
     // ----- Left -----
     "hyprland/workspaces": {
@@ -60,11 +60,6 @@
         "format-charging": "{capacity}% ",
         "format-plugged": "{capacity}% ",
         "format-icons": ["", "", "", "", ""]
-    },
-
-    "tray": {
-        "icon-size": 16,
-        "spacing": 8
     },
 
     "clock": {
