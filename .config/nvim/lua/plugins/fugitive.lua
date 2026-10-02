@@ -69,7 +69,19 @@ return {
     -- an amend or a rebase (refuses if the remote moved under you).
     { "<leader>gp", "<cmd>Git push<CR>",                    desc = "Push" },
     { "<leader>gP", "<cmd>Git push --force-with-lease<CR>", desc = "Push --force-with-lease" },
-    { "<leader>gu", "<cmd>Git pull --rebase<CR>",           desc = "Pull --rebase" },
+    -- Two pulls, on purpose:
+    --   gu = plain `git pull` (merge). The safe default: creates a merge commit
+    --        if both sides moved, and any conflicts surface once, all at once.
+    --        Bail out with `git merge --abort`.
+    --   gU = `git pull --rebase`. Replays YOUR commits on top of the remote for
+    --        a linear history with no merge commit, but conflicts arrive one
+    --        commit at a time. Bail out with `git rebase --abort`.
+    { "<leader>gu", "<cmd>Git pull<CR>",                    desc = "Pull (merge)" },
+    { "<leader>gU", "<cmd>Git pull --rebase<CR>",           desc = "Pull --rebase (linear)" },
+
+    -- Deliberately NOT executed: this leaves `:Git merge ` on the command line
+    -- so you type the branch name yourself, then press <CR>.
+    { "<leader>gM", ":Git merge ",                          desc = "Merge a branch (type name)" },
     { "<leader>gf", "<cmd>Git fetch --all --prune<CR>",     desc = "Fetch all + prune" },
 
     -- === Inspect ===
@@ -77,6 +89,22 @@ return {
     { "<leader>gl", "<cmd>Git log --oneline --graph --all<CR>",  desc = "Log (graph, all branches)" },
     { "<leader>gL", "<cmd>0Gclog<CR>",                           desc = "Log (this file only)" },
     { "<leader>gB", "<cmd>Git branch<CR>",                       desc = "List branches" },
+
+    -- === Switching branches ===
+    -- Like gM, these are NOT executed: they leave the command on the cmdline
+    -- so you type the branch name (<Tab> completes it), then press <CR>.
+    --   go = switch to an existing branch
+    --   gN = create a NEW branch and switch to it
+    --   gO = jump back to the previous branch (like `cd -`)
+    { "<leader>go", ":Git checkout ",                            desc = "Checkout branch (type name)" },
+    { "<leader>gN", ":Git checkout -b ",                         desc = "New branch (type name)" },
+    { "<leader>gO", "<cmd>Git checkout -<CR>",                   desc = "Checkout previous branch" },
+
+    -- === Stash ===
+    -- Git refuses to switch branches if an uncommitted change would be
+    -- clobbered. Stash parks your work, switch, then pop it back later.
+    { "<leader>gz", "<cmd>Git stash push -u<CR>", desc = "Stash changes (incl. untracked)" },
+    { "<leader>gZ", "<cmd>Git stash pop<CR>",     desc = "Stash pop (restore)" },
 
     -- === Current file ===
     { "<leader>gw", "<cmd>Gwrite<CR>", desc = "Write + stage file (git add)" },

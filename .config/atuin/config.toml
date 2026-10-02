@@ -79,7 +79,9 @@
 
 ## the maximum number of lines the interface should take up
 ## set it to 0 to always go full screen
-# inline_height = 40
+## 0 = use the alternate screen, so the shell prompt never gets scrolled
+## to the top of the terminal when the search UI opens.
+inline_height = 0
 
 ## the maximum number of lines the interface should take up
 ## when atuin is invoked from a shell up-key binding
