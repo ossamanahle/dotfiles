@@ -1,14 +1,22 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# Minimal single-line prompt: directory + git + arrow
-add_newline = false
+# Minimal two-line prompt: user@host:dir git duration / arrow
+add_newline = true
 
-format = "$directory$git_branch$git_status$character"
+format = "$username@$hostname:$directory$git_branch$git_status$cmd_duration$line_break$character"
+
+[username]
+show_always = true
+format = "$user"
+
+[hostname]
+ssh_only = false
+format = "$hostname"
 
 [directory]
 style = "blue"
 truncation_length = 3
-truncate_to_repo = true
+truncate_to_repo = false
 
 [git_branch]
 symbol = " "
@@ -16,8 +24,13 @@ format = "[$symbol$branch]($style) "
 style = "green"
 
 [git_status]
-format = "[$all_status$ahead_behind]($style)"
+format = "([$all_status$ahead_behind]($style) )"
 style = "dimmed yellow"
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+format = "λ $duration"
 
 [character]
 success_symbol = "[>](green)"
