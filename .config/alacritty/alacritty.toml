@@ -73,3 +73,44 @@ white   = "#d4be98"
 key = "Return"
 mods = "Shift"
 chars = "\u001B\r"
+
+# VI MODE FAST SCROLLING
+# Alacritty's vi mode does NOT support count prefixes (5j, 10k).
+# These give fast movement with single chords instead.
+
+# Shift+J / Shift+K -> half page down / up
+[[keyboard.bindings]]
+key = "J"
+mods = "Shift"
+mode = "Vi|~Search"
+action = "ScrollHalfPageDown"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Shift"
+mode = "Vi|~Search"
+action = "ScrollHalfPageUp"
+
+# Shift+D / Shift+U -> full page down / up
+[[keyboard.bindings]]
+key = "D"
+mods = "Shift"
+mode = "Vi|~Search"
+action = "ScrollPageDown"
+
+[[keyboard.bindings]]
+key = "U"
+mods = "Shift"
+mode = "Vi|~Search"
+action = "ScrollPageUp"
+
+# gg / G equivalents on Home/End
+[[keyboard.bindings]]
+key = "Home"
+mode = "Vi|~Search"
+action = "ScrollToTop"
+
+[[keyboard.bindings]]
+key = "End"
+mode = "Vi|~Search"
+action = "ScrollToBottom"

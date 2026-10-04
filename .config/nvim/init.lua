@@ -27,6 +27,8 @@ vim.opt.wrap = true            -- soft-wrap long lines
 vim.opt.linebreak = true       -- wrap at word boundaries, not mid-word
 vim.opt.breakindent = true     -- wrapped lines keep the original indent
 vim.opt.scrolloff = 8          -- keep 8 lines visible above/below the cursor
+vim.opt.smoothscroll = true    -- scroll by screen line, not logical line (needs wrap=true)
+vim.opt.scroll = 15           -- how far <C-d>/<C-u> move; 0 would mean "half a window"
 vim.opt.signcolumn = "yes"     -- reserve the gutter so text doesn't jump
 vim.opt.mouse = "a"            -- enable the mouse in all modes
 vim.opt.clipboard = "unnamedplus" -- use the system clipboard (needs wl-clipboard)
@@ -46,6 +48,34 @@ vim.opt.fillchars:append("diff:╱")           -- diagonal fill for missing line
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")                          -- clear search highlight
 vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { desc = "Save file" })
 vim.keymap.set("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit window" })
+
+-- === Faster scrolling ===
+-- Counts already work natively (10j, 25k), these just reduce keystrokes.
+
+-- Half-page jumps that re-center the cursor, so you never lose your place.
+vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
+vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
+
+-- Keep search results and jumps centered too.
+vim.keymap.set("n", "n", "nzzzv", { desc = "Next match (centered)" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Prev match (centered)" })
+
+-- Triple-speed line scrolling without moving the cursor off screen.
+vim.keymap.set({ "n", "v" }, "<C-e>", "3<C-e>", { desc = "Scroll down 3 lines" })
+vim.keymap.set({ "n", "v" }, "<C-y>", "3<C-y>", { desc = "Scroll up 3 lines" })
+
+-- Fast cursor movement: 5 lines at a time, wrap-aware via gj/gk.
+vim.keymap.set({ "n", "v" }, "<S-Down>", "5gj", { desc = "Down 5 lines" })
+vim.keymap.set({ "n", "v" }, "<S-Up>", "5gk", { desc = "Up 5 lines" })
+
+-- With wrap on, make j/k follow screen lines when no count is given,
+-- but stay linewise for counts so 10j still lands on logical line +10.
+vim.keymap.set({ "n", "v" }, "j", function()
+  return vim.v.count == 0 and "gj" or "j"
+end, { expr = true, desc = "Down (screen line aware)" })
+vim.keymap.set({ "n", "v" }, "k", function()
+  return vim.v.count == 0 and "gk" or "k"
+end, { expr = true, desc = "Up (screen line aware)" })
 
 -- Keep the selection after indenting so you can press < / > repeatedly
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left, keep selection" })
