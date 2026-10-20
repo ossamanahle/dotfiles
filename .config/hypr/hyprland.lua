@@ -45,7 +45,7 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal    = "alacritty"
+local terminal    = "ghostty"
 local fileManager = "dolphin"
 local menu        = "fuzzel"
 
@@ -457,10 +457,10 @@ hl.layer_rule({
     blur  = true,
 })
 
--- Alacritty opacity (compositor-level so nvim/TUI apps respect it)
+-- Terminal opacity (compositor-level so nvim/TUI apps respect it)
 hl.window_rule({
-    name  = "alacritty-opacity",
-    match = { class = "Alacritty" },
+    name  = "terminal-opacity",
+    match = { class = "^(Alacritty|com\\.mitchellh\\.ghostty)$" },
     opacity = 0.85,
 })
 
