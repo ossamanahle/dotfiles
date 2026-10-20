@@ -25,6 +25,7 @@ return {
       "jsonls",       -- JSON              (needs Node)
       "yamlls",       -- YAML              (needs Node; schema-aware)
       "taplo",        -- TOML              (standalone binary)
+      "nil_ls",           -- nil                
 
       -- Shell. bashls covers both `sh`/`bash` and zsh buffers.
       -- Diagnostics come from shellcheck, installed separately below.
