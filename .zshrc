@@ -14,6 +14,7 @@ setopt EXTENDED_HISTORY       # timestamp entries
 # Binds ^R per-keymap (emacs/viins/vicmd), so it survives the `bindkey -v`
 # below. Arrow keys are unbound in the key-bindings section.
 eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(direnv hook zsh)"
 
 # ── Directory & navigation ───────────────────────────────
 setopt AUTO_CD                # `foo` == `cd foo`
