@@ -1,0 +1,129 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Gruvbox text-only prompt
+
+add_newline = true
+# "material" or "neutral"
+palette = "neutral"
+
+format = """
+$username$hostname $directory\
+$git_branch${custom.git_dirty}$git_status\
+$nix_shell$nodejs$python$golang$rust\
+$fill\
+$cmd_duration\
+$line_break\
+$character"""
+
+[palettes.material]
+user    = "#7c6f64"
+host    = "#7c6f64"
+path    = "#7daea3"
+branch  = "#a9b665"
+dirty   = "#e78a4e"
+arrow   = "#d4be98"
+vimode  = "#d8a657"
+error   = "#ea6962"
+node    = "#a9b665"
+python  = "#d8a657"
+go      = "#89b482"
+rust    = "#e78a4e"
+muted   = "#928374"
+
+[palettes.neutral]
+user    = "#a89984"
+host    = "#7c6f64"
+path    = "#458588"
+branch  = "#98971a"
+dirty   = "#d79921"
+arrow   = "#98971a"
+vimode  = "#d79921"
+error   = "#cc241d"
+node    = "#98971a"
+python  = "#d79921"
+go      = "#689d6a"
+rust    = "#d65d0e"
+muted   = "#928374"
+
+[username]
+show_always = true
+style_user = "user"
+style_root = "bold error"
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = false
+ssh_symbol = " (ssh)"
+style = "host"
+format = "[@](host)[$hostname$ssh_symbol]($style)"
+aliases = { "nixos" = "" }
+
+[directory]
+style = "bold path"
+format = "[$path]($style)[$read_only]($read_only_style) "
+truncation_length = 0
+truncate_to_repo = true
+home_symbol = "~"
+read_only = " "
+read_only_style = "error"
+
+[git_branch]
+symbol = " "
+style = "branch"
+format = "[$symbol$branch]($style)"
+
+# "*" when the tree is dirty
+[custom.git_dirty]
+when = "test -n \"$(git status --porcelain 2>/dev/null | head -1)\""
+require_repo = true
+shell = ["sh"]
+symbol = "*"
+style = "dirty"
+format = "[$symbol]($style)"
+
+# Only ahead/behind arrows
+[git_status]
+style = "dirty"
+format = "( [$ahead_behind]($style)) "
+
+[nix_shell]
+symbol = " "
+style = "path"
+format = "[$symbol$state]($style) "
+impure_msg = "nix"
+pure_msg = "nix-pure"
+
+[nodejs]
+symbol = " "
+style = "node"
+format = "[$symbol]($style) "
+
+[python]
+symbol = " "
+style = "python"
+format = "[$symbol( \\($virtualenv\\))]($style) "
+
+[golang]
+symbol = " "
+style = "go"
+format = "[$symbol]($style) "
+
+[rust]
+symbol = " "
+style = "rust"
+format = "[$symbol]($style) "
+
+# Pushes duration to the right
+[fill]
+symbol = " "
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+style = "muted"
+format = "[ $duration]($style)"
+
+[character]
+success_symbol = "[>](bold arrow)"
+error_symbol = "[>](bold error)"
+vimcmd_symbol = "[<](bold vimode)"

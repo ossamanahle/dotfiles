@@ -1,0 +1,53 @@
+[opener]
+pdf = [
+    { run = 'zathura "$@"', orphan = true, desc = "Zathura", for = "unix" },
+]
+
+code = [
+    { run = 'nvim "$s"', orphan = true, desc = "nvim", for = "unix" },
+]
+
+[open]
+prepend_rules = [
+    { mime = "application/pdf", use = "pdf" },
+    { url = "*.json", use = "code" },
+    { url = "*.cpp", use = "code" },
+    { url = "*.c", use = "code" },
+    { url = "*.html", use = "code" },
+    { url = "*.css", use = "code" },
+    { url = "*.js", use = "code" },
+    { url = "*.tsx", use = "code" },
+    { url = "*.toml", use = "code" },
+    { url = "*.md", use = "code" },
+    { url = "*.txt", use = "code" },
+    { url = "*.yaml", use = "code" },
+    { url = "*.yml", use = "code" },
+    { url = "*.sh", use = "code" },
+    { url = "*.zsh", use = "code" },
+    { url = "*.bash", use = "code" },
+    { url = "*.conf", use = "code" },
+    { url = "*.ini", use = "code" },
+    { url = "*.env", use = "code" },
+    { url = ".gitignore", use = "code" },
+    { url = "*.lua", use = "code" },
+    { url = "*.jsx", use = "code" },
+    { url = "*.mjs", use = "code" },
+    { url = "*.cjs", use = "code" },
+    { url = "*.vue", use = "code" },
+    { url = "*.svelte", use = "code" },
+    { url = "*.scss", use = "code" },
+    { url = "*.sass", use = "code" },
+    { url = "*.less", use = "code" },
+    { url = "*.xml", use = "code" },
+    { url = "*.svg", use = "code" },
+    { url = "*.rs", use = "code" },
+    { url = "*.go", use = "code" },
+    { url = "*.py", use = "code" },
+    { url = "*.rb", use = "code" },
+    { url = "*.java", use = "code" },
+    { url = "*.kt", use = "code" },
+    { url = "*.swift", use = "code" },
+    { url = "*.h", use = "code" },
+    { url = "*.hpp", use = "code" },
+    { url = "*.cs", use = "code" },
+]

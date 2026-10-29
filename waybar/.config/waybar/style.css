@@ -1,0 +1,77 @@
+* {
+    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", monospace;
+    font-size: 13px;
+    min-height: 0;
+}
+
+/* Gruvbox */
+window#waybar {
+    background: rgba(40, 40, 40, 0.85);
+    color: #ebdbb2;
+}
+
+/* Workspaces */
+#workspaces {
+    margin-left: 6px;
+}
+
+#workspaces button {
+    padding: 0 4px;
+    color: #928374;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+#workspaces button.active {
+    color: #7a836d;
+    font-weight: bold;
+}
+
+#workspaces button:hover {
+    color: #ebdbb2;
+    background: transparent;
+}
+
+/* Modules */
+#cpu,
+#custom-gpu,
+#memory,
+#pulseaudio,
+#network,
+#battery,
+#clock,
+#tray {
+    padding: 0 10px;
+    color: #ebdbb2;
+}
+
+#clock {
+    margin-right: 6px;
+    margin-left: 6px;
+    font-weight: bold;
+}
+
+#battery.warning {
+    color: #fabd2f;
+}
+
+#battery.critical {
+    color: #fb4934;
+}
+
+#battery.charging {
+    color: #b8bb26;
+}
+
+#custom-gpu.warning {
+    color: #fabd2f;
+}
+
+#custom-gpu.critical {
+    color: #fb4934;
+}
+
+#custom-gpu.asleep {
+    color: #928374;
+}
