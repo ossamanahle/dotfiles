@@ -39,6 +39,11 @@ done
 
 [[ -d "$BACKUP" ]] && echo "==> replaced files kept in $BACKUP"
 
+# Ghostty terminfo (devpod ssh doesn't get Ghostty's ssh terminfo integration)
+if [[ -f "$SRC/ghostty/xterm-ghostty.terminfo" ]] && command -v tic >/dev/null 2>&1; then
+  tic -x "$SRC/ghostty/xterm-ghostty.terminfo" && echo "==> installed xterm-ghostty terminfo"
+fi
+
 # Debian puts zsh plugins in /usr/share/<name>/, not /usr/share/zsh/plugins/<name>/
 if [[ -f "$HOME/.zshrc" ]]; then
   for n in zsh-autosuggestions zsh-syntax-highlighting; do
