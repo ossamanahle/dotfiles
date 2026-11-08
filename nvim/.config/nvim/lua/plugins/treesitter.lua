@@ -3,6 +3,10 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   lazy = false, -- doesn't support lazy-loading
+  -- Containers without a compiler skip it and keep regex syntax
+  cond = function()
+    return vim.fn.executable("tree-sitter") == 1 and vim.fn.executable("cc") == 1
+  end,
   build = ":TSUpdate",
   config = function()
     -- Parser names, not filetypes. Add more with :TSInstall <name>.

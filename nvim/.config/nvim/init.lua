@@ -28,7 +28,9 @@ vim.opt.smoothscroll = true    -- needs wrap
 vim.opt.scroll = 15           -- <C-d>/<C-u> distance
 vim.opt.signcolumn = "yes"
 vim.opt.mouse = "a"
-vim.opt.clipboard = "unnamedplus" -- needs wl-clipboard
+if vim.fn.executable("wl-copy") == 1 then
+  vim.opt.clipboard = "unnamedplus" -- needs wl-clipboard (absent in containers)
+end
 vim.opt.undofile = true
 vim.opt.termguicolors = true   -- required by gruvbox
 

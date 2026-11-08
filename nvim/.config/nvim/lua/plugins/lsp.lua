@@ -1,45 +1,37 @@
--- LSP via Mason. Installed servers are auto-enabled (nvim 0.11+).
-return {
-  "mason-org/mason-lspconfig.nvim",
-  dependencies = {
-    { "mason-org/mason.nvim", opts = {} },
-    "neovim/nvim-lspconfig",
-  },
-  opts = {
-    -- Auto-installed. lspconfig names, not Mason package names.
-    ensure_installed = {
-      "lua_ls",
-      "pyright",
-      "clangd",
-      "ts_ls",
-      "jdtls",  -- needs a JDK
+-- Servers come from PATH, never from nvim: dev.nix on the host, the image in
+-- a container. A server is enabled only if its binary exists, so this one
+-- config fits every machine and each box decides its own servers.
+local servers = {
+  -- lspconfig name = binary
+  lua_ls   = "lua-language-server",
+  pyright  = "pyright-langserver",
+  clangd   = "clangd",
+  ts_ls    = "typescript-language-server",
+  jdtls    = "jdtls",
+  html     = "vscode-html-language-server",
+  cssls    = "vscode-css-language-server",
+  jsonls   = "vscode-json-language-server",
+  yamlls   = "yaml-language-server",
+  taplo    = "taplo",
+  nil_ls   = "nil",
+  bashls   = "bash-language-server",
+  dockerls = "docker-langserver",
+}
 
-      "html",
-      "cssls",
-      "jsonls",
-      "yamlls",
-      "taplo",
-      "nil_ls",
-      "bashls",
-      "sqlls",
-      -- No rust_analyzer: install via `rustup component add rust-analyzer`
-    },
-  },
-  config = function(_, opts)
+return {
+  "neovim/nvim-lspconfig",
+  config = function()
     -- Advertise blink.cmp completion features to every server
     vim.lsp.config("*", {
       capabilities = require("blink.cmp").get_lsp_capabilities(),
     })
 
-    require("mason-lspconfig").setup(opts)
-
-    -- bashls diagnostics need shellcheck: :MasonInstall shellcheck
-
-    -- Let bashls attach to zsh files
+    -- Let bashls attach to zsh files (diagnostics need shellcheck on PATH)
     vim.lsp.config("bashls", {
       filetypes = { "sh", "bash", "zsh" },
     })
 
+    -- SchemaStore validates k8s, helm and compose files
     vim.lsp.config("yamlls", {
       settings = {
         yaml = {
@@ -49,6 +41,12 @@ return {
         },
       },
     })
+
+    for name, bin in pairs(servers) do
+      if vim.fn.executable(bin) == 1 then
+        vim.lsp.enable(name)
+      end
+    end
 
     -- Keymaps once a server attaches
     vim.api.nvim_create_autocmd("LspAttach", {
