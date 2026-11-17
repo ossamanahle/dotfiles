@@ -66,8 +66,9 @@ return {
         -- <M-l> cycles through these
         cycle_layout_list = { "horizontal", "vertical", "center", "bottom_pane" },
         prompt_prefix = "  ",
-        selection_caret = " ",
-        path_display = { "truncate" },
+        selection_caret = "> ", -- visible marker: no more "indent" when moving with j/k
+        path_display = { "smart" }, -- show only the differing part of paths
+        wrap_results = true, -- wrap long entries (e.g. git commits) instead of cutting them
         sorting_strategy = "ascending",
         layout_config = {
           prompt_position = "top",
