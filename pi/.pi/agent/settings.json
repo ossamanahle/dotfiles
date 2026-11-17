@@ -1,13 +1,8 @@
 {
-  "lastChangelogVersion": "1.0.0",
-  "packages": [
-    "npm:@cgaravitoq/pi-claude-code-auth"
-  ],
-  "defaultProvider": "claude-code",
-  "defaultModel": "claude-opus-5-5",
+  "lastChangelogVersion": "1.5.2",
+  "packages": [],
   "defaultThinkingLevel": "medium",
   "theme": "dark",
-  "enabledModels": [
-    "claude-code/*"
-  ]
+  "defaultProvider": "kimi-coding",
+  "defaultModel": "kimi-for-coding"
 }
